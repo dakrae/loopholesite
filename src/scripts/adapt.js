@@ -33,9 +33,22 @@ function hsl2rgb(h, s, l) {
   return [hk(h + 1 / 3), hk(h), hk(h - 1 / 3)];
 }
 
+// Perceptual luma of the paper veil (#f6f5f1), same weights the sampler uses.
+const PAPER_LUMA = (0.299 * 246 + 0.587 * 245 + 0.114 * 241) / 255;
+
+function ratio(a, b) {
+  const hi = Math.max(a, b), lo = Math.min(a, b);
+  return (hi + 0.05) / (lo + 0.05);
+}
+
 // Complementary hue, boosted saturation, lightness pushed until the
 // WCAG contrast ratio clears 3.8 + spread * 2.2.
-function contrastColor(r, g, b, spread) {
+//
+// A letter is rated against the darkest and brightest patch under it as
+// well as the average. Over foliage or any finely speckled area the
+// average alone is misleading: it would pick a dark letter for a bright
+// gap between leaves while half the glyph still stands on dark green.
+function contrastColor(r, g, b, spread, loLuma, hiLuma) {
   const rn = r / 255, gn = g / 255, bn = b / 255;
   const mx = Math.max(rn, gn, bn), mn = Math.min(rn, gn, bn);
   const l = (mx + mn) / 2;
@@ -51,11 +64,14 @@ function contrastColor(r, g, b, spread) {
   const outH = (hue + 180) % 360;
   const outS = Math.min(1, Math.max(0.45, s * 1.7));
   const bgL = rel(rn, gn, bn);
+  // The extremes stand in as greys: contrast is a luminance relation, and
+  // only the luminance of each patch was carried through the sampling.
+  const bgLo = loLuma === undefined ? bgL : rel(loLuma, loLuma, loLuma);
+  const bgHi = hiLuma === undefined ? bgL : rel(hiLuma, hiLuma, hiLuma);
   function pick(L) {
     const cc = hsl2rgb(outH / 360, outS, L);
     const fg = rel(cc[0], cc[1], cc[2]);
-    const hi = Math.max(fg, bgL), lo = Math.min(fg, bgL);
-    return { L, ratio: (hi + 0.05) / (lo + 0.05) };
+    return { L, ratio: Math.min(ratio(fg, bgL), ratio(fg, bgLo), ratio(fg, bgHi)) };
   }
   const luma = 0.299 * rn + 0.587 * gn + 0.114 * bn;
   const sp = spread || 0;
@@ -87,6 +103,14 @@ export function initAdapt() {
   // sampling the wrong one would colour every letter against a photo that
   // is not on screen.
   let W = 0, H = 0, data = null;
+
+  // Kept in step with the --veil custom property, so the sampling always
+  // accounts for exactly the veil that is on screen.
+  let V = 0.2;
+  function readVeil() {
+    const v = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--veil'));
+    if (!Number.isNaN(v)) V = v;
+  }
 
   const live = new Set();
   let started = false;
@@ -169,7 +193,6 @@ export function initAdapt() {
     const sx = window.scrollX, sy = window.scrollY;
     const sc = Math.max(vw / W, vh / H);
     const ox = (vw - W * sc) / 2, oy = (vh - H * sc) / 2;
-    const V = 0.2; // the 20% veil: blend samples toward paper before choosing
     const acc = [0, 0, 0];
     function tap(vx, vy) {
       let ix = ((vx - ox) / sc) | 0, iy = ((vy - oy) / sc) | 0;
@@ -190,19 +213,28 @@ export function initAdapt() {
         const L = m.x - sx, T = m.y - sy;
         if (T + m.h < -40 || T > vh + 40) continue;
         acc[0] = acc[1] = acc[2] = 0;
-        // 4 samples, biased upward so they land on the glyph
-        const y1 = T + m.h * 0.2, y2 = T + m.h * 0.44;
+        // 4 samples placed on the glyph rather than on the line box. The
+        // ink of a letter sits between roughly 33% and 68% of the box
+        // height (measured against the rendered page); the prototype's
+        // 20%/44% put the upper sample in the empty leading above the
+        // letter, so a letter standing on a dark area could take its
+        // colour from bright sky above it.
+        const y1 = T + m.h * 0.42, y2 = T + m.h * 0.62;
         const x1 = L + m.w * 0.25, x2 = L + m.w * 0.75;
         let lo = 1, hi = 0, lum;
         lum = tap(x1, y1); if (lum < lo) lo = lum; if (lum > hi) hi = lum;
         lum = tap(x2, y1); if (lum < lo) lo = lum; if (lum > hi) hi = lum;
         lum = tap(x1, y2); if (lum < lo) lo = lum; if (lum > hi) hi = lum;
         lum = tap(x2, y2); if (lum < lo) lo = lum; if (lum > hi) hi = lum;
+        // PAPER_LUMA is the veil's own luminance: the darkest and brightest
+        // patches have to be blended toward it exactly as the average is.
         const next = contrastColor(
           acc[0] / 4 * (1 - V) + 246 * V,
           acc[1] / 4 * (1 - V) + 245 * V,
           acc[2] / 4 * (1 - V) + 241 * V,
-          (hi - lo) * (1 - V)
+          (hi - lo) * (1 - V),
+          lo * (1 - V) + PAPER_LUMA * V,
+          hi * (1 - V) + PAPER_LUMA * V
         );
         if (el._c !== next) {
           el._c = next;
@@ -224,11 +256,12 @@ export function initAdapt() {
   function start() {
     if (started) return;
     started = true;
+    readVeil();
     wrap();
     observeBlocks();
     measureAll();
     window.addEventListener('scroll', onAdapt, { passive: true });
-    window.addEventListener('resize', () => { cacheOK = false; onAdapt(); });
+    window.addEventListener('resize', () => { cacheOK = false; readVeil(); onAdapt(); });
     document.addEventListener('visibilitychange', () => { if (!document.hidden) onAdapt(); });
     // Layout changed (e.g. past-shows toggle): re-measure and repaint.
     api.refresh = () => { cacheOK = false; onAdapt(); };

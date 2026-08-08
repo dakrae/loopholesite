@@ -85,7 +85,11 @@ const description =
       </div>
       <a class="hero-next" href="#live">
         {nextShow && (
-          <span class="hero-next-line">Next show — {nextShow.date} · {nextShow.venue} · {nextShow.city}</span>
+          <span class="hero-next-line"
+            ><span class="hero-next-when">Next show — {nextShow.date}</span
+            ><span class="hero-next-sep"> · </span
+            ><span class="hero-next-where">{nextShow.venue} · {nextShow.city}</span
+          ></span>
         )}
         <span class="hero-next-label">All dates →</span>
       </a>

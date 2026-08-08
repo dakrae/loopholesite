@@ -7,6 +7,9 @@
   --accent-light: oklch(0.68 0.16 25);
   --radius-media: 14px;
   --radius-pill: 999px;
+  /* Opacity of the paper veil over the background photo. The colour engine
+     reads this value, so the veil and the sampling can never drift apart. */
+  --veil: 0.2;
 }
 
 html {

@@ -29,9 +29,20 @@ a:hover {
 .lh-veil {
   position: fixed;
   inset: 0;
-  background: rgba(246, 245, 241, 0.2);
+  background: rgb(246 245 241 / var(--veil));
   z-index: 1;
   pointer-events: none;
+}
+
+/* The portrait photo served to phones is foliage-heavy, and a single letter
+   can span a bright gap between leaves and dark green at once — no letter
+   colour reads against both. A heavier veil narrows what the photo throws
+   at the text; it is the lever the design already provides for exactly
+   this. Desktop keeps the tuned 20%. */
+@media (max-width: 820px) {
+  :root {
+    --veil: 0.34;
+  }
 }
 
 /* ---- menu ---- */
@@ -244,6 +255,39 @@ a:hover {
   letter-spacing: 0.2em;
   text-transform: uppercase;
   opacity: 0.85;
+}
+
+/* The next-show line is a single nowrap row on the wide layout, where it
+   fits. On a phone it ran past the edge and was clipped, so it breaks into
+   two: date on the first line, venue and city on the second. Left to wrap
+   on its own it took three or four lines, which crowded the subtitle. */
+@media (max-width: 820px) {
+  .hero-next {
+    right: 28px;
+    width: auto;
+    max-width: none;
+    overflow: visible;
+    white-space: normal;
+    padding: 12px 0;
+    gap: 0;
+  }
+
+  .hero-next-sep {
+    display: none;
+  }
+
+  .hero-next-where {
+    display: block;
+  }
+
+  /* The wording of the link moves out, but the affordance stays. */
+  .hero-next-where::after {
+    content: ' →';
+  }
+
+  .hero-next-label {
+    display: none;
+  }
 }
 
 /* ---- content sections ---- */
