@@ -45,6 +45,7 @@ Fast alles liegt im Repo unter `public/`:
 | Hintergrundfoto Hauptseite | `public/images/bg.jpg` |
 | Banner Booking-Seite | `public/images/booking-hero.jpg` |
 | Pressefotos | `public/images/press/` |
+| Bandfotos | `public/images/band/` |
 | Album-Cover | `public/covers/` |
 | Presskit-PDFs | `public/downloads/` |
 
@@ -53,15 +54,10 @@ aus diesen Dateien erzeugt (`scripts/make-zips.mjs`) — ein neues Pressefoto in
 `public/images/press/` landet also von selbst im ZIP. Sie sind deshalb bewusst
 nicht eingecheckt.
 
-Noch offen:
-
-- [x] Alle 13 Album-Cover
-- [x] Hintergrund-, Banner- und Pressefotos
-- [x] Presskit-PDFs (ZIPs werden generiert)
-- [ ] **Bandfotos** (`public/images/band/`) — die drei Einzelporträts werden noch
-      beim Build vom alten Wix-Server geholt (`scripts/fetch-assets.mjs`) und
-      müssen ersetzt werden, bevor die alte Seite abgeschaltet wird
-- [ ] **Video-Thumbnail** — kommt von YouTube, unkritisch
+Die Seite hängt damit **nicht mehr vom alten Wix-Hosting ab** — es kann jederzeit
+abgeschaltet werden. Einzige Ausnahme: das Vorschaubild des Videos holt
+`scripts/fetch-assets.mjs` beim Build von YouTube. Wer das auch lokal will, legt
+einfach eine eigene Datei unter `public/images/video-doom.jpg` ab.
 
 ## Entwicklung
 
