@@ -1,0 +1,216 @@
+---
+import '@fontsource/poppins/300.css';
+import '@fontsource/poppins/400.css';
+import '@fontsource/poppins/500.css';
+import '@fontsource/poppins/600.css';
+import '../styles/global.css';
+import '../styles/main.css';
+import fs from 'node:fs';
+import path from 'node:path';
+import shows from '../data/shows.json';
+import members from '../data/members.json';
+import releases from '../data/releases.json';
+
+const parseDate = (d) => {
+  const [day, month, year] = d.split('.').map(Number);
+  return new Date(year, month - 1, day);
+};
+const today = new Date();
+today.setHours(0, 0, 0, 0);
+
+const upcoming = shows
+  .filter((s) => parseDate(s.date) >= today)
+  .sort((a, b) => parseDate(a.date) - parseDate(b.date));
+const past = shows
+  .filter((s) => parseDate(s.date) < today)
+  .sort((a, b) => parseDate(b.date) - parseDate(a.date));
+const nextShow = upcoming[0];
+
+const hasCover = (cover) =>
+  !!cover && fs.existsSync(path.join(process.cwd(), 'public', cover));
+
+const featured = releases[0];
+const catalogue = releases.slice(1);
+
+const description =
+  'loophole — a trio at the pulse of contemporary music from Zürich. Jazz expression, atmospheric beat-driven soundscapes.';
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>loophole — Zürich</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content="loophole" />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content="/images/bg.jpg" />
+    <meta property="og:type" content="website" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div id="lh-nav" class="noblend nav-inner">
+        <nav class="nav-links" aria-label="Main">
+          <a href="#about">About</a>
+          <a href="#band">Band</a>
+          <a href="#live">Live</a>
+          <a href="#media">Media</a>
+          <a href="#music">Music</a>
+        </nav>
+        <div class="nav-rule"></div>
+        <div class="nav-side">
+          <a class="icon icon-instagram" href="https://www.instagram.com/loophole_sessions" aria-label="Instagram"></a>
+          <a class="icon icon-tiktok" href="https://www.tiktok.com/@loophole_sessions" aria-label="TikTok"></a>
+          <a class="nav-contact" href="mailto:michel@rarealpine.ch">Contact</a>
+        </div>
+      </div>
+    </header>
+
+    <section id="top" class="hero">
+      <img class="lh-bg" src="/images/bg.jpg" alt="loophole" />
+      <div class="lh-veil"></div>
+      <div class="hero-inner">
+        <h1>loophole</h1>
+        <p class="hero-sub">A trio at the pulse of contemporary music. Jazz expression, atmospheric beat-driven soundscapes.</p>
+      </div>
+      <a class="hero-next" href="#live">
+        {nextShow && (
+          <span class="hero-next-line">Next show — {nextShow.date} · {nextShow.venue} · {nextShow.city}</span>
+        )}
+        <span class="hero-next-label">All dates →</span>
+      </a>
+    </section>
+
+    <div id="lh-content" class="lh-content">
+      <section id="about" class="section section-about">
+        <p class="about-text">
+          loophole are a trio at the pulse of contemporary music. Over years of exploration and creative
+          experimentation, they have developed a distinctive sound that blends the expressiveness of jazz with
+          atmospheric, beat-driven soundscapes. While Dave, Michel, and Claude form the core of the project, they
+          regularly collaborate with guest musicians, allowing loophole's musical universe to expand and evolve
+          with each contribution.
+        </p>
+      </section>
+
+      <section id="band" class="section">
+        <div class="band-grid">
+          {members.map((m) => (
+            <a class="member" href={m.url}>
+              <div class="member-photo">
+                <img src={m.photo} alt={m.name} loading="lazy" />
+              </div>
+              <div class="member-meta">
+                <h3>{m.name}</h3>
+                <span class="member-role">{m.role}</span>
+              </div>
+            </a>
+          ))}
+        </div>
+      </section>
+
+      <section id="live" class="section">
+        <div>
+          {upcoming.map((s) => (
+            <div class="gig-row">
+              <span class="gig-date">{s.date}</span>
+              <span class="gig-venue">{s.venue}</span>
+              <span class="gig-city">{s.city}</span>
+              <span class="gig-ticket noblend">
+                {s.ticketUrl ? (
+                  <a class="ticket-btn" href={s.ticketUrl}>Tickets</a>
+                ) : (
+                  <span class="ticket-soon">Soon</span>
+                )}
+              </span>
+            </div>
+          ))}
+        </div>
+        <div class="past-toggle-wrap">
+          <button id="lh-past-toggle" class="noblend past-toggle" type="button" aria-controls="lh-past">
+            Hide past shows
+          </button>
+        </div>
+        <div id="lh-past" class="past-list">
+          {past.map((s) => (
+            <div class="gig-row">
+              <span class="gig-date">{s.date}</span>
+              <span class="gig-venue">{s.venue}</span>
+              <span class="gig-city">{s.city}</span>
+              <span></span>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section id="media" class="section">
+        <div class="section-head">
+          <a class="noblend more-link" href="https://www.youtube.com/@loophole_sessions">All videos →</a>
+        </div>
+        <a class="video-card" href="https://www.youtube.com/watch?v=oLf0dvIrwU4">
+          <img src="/images/video-doom.jpg" alt="loophole video" loading="lazy" />
+          <div class="video-overlay">
+            <span class="noblend play-pill">Play</span>
+          </div>
+        </a>
+      </section>
+
+      <section id="music" class="section">
+        <div class="section-head">
+          <a class="noblend more-link" href="https://music.rarealpine.ch/lhartistpages">Full catalogue →</a>
+        </div>
+        <a class="featured-release" href={featured.url}>
+          {hasCover(featured.cover) ? (
+            <img src={featured.cover} alt={featured.title} />
+          ) : (
+            <div class="release-cover"><span class="release-cover-title">{featured.title}</span></div>
+          )}
+          <div>
+            <span class="featured-label">Latest release</span>
+            <h3 class="featured-title">{featured.title}</h3>
+            <p class="featured-meta">{featured.meta}</p>
+          </div>
+        </a>
+        <div class="release-grid">
+          {catalogue.map((r) => (
+            <a class="release" href={r.url}>
+              <div class="release-cover">
+                {hasCover(r.cover) ? (
+                  <img src={r.cover} alt={r.title} loading="lazy" />
+                ) : (
+                  <span class="release-cover-title">{r.title}</span>
+                )}
+              </div>
+              {hasCover(r.cover) && <div class="t release-title">{r.title}</div>}
+              <div class="t release-year">{r.year}</div>
+            </a>
+          ))}
+        </div>
+      </section>
+
+      <footer class="site-footer">
+        <div class="footer-grid">
+          <div>
+            <div class="t footer-wordmark">loophole</div>
+            <p class="footer-place">Zürich, Switzerland</p>
+          </div>
+          <div class="footer-col">
+            <span class="footer-col-title">Booking &amp; Press</span>
+            <a href="mailto:michel@rarealpine.ch">michel@rarealpine.ch</a>
+            <a class="noblend footer-accent-link" href="/booking/">Press kit &amp; rider →</a>
+          </div>
+          <div class="footer-col">
+            <span class="footer-col-title">Follow</span>
+            <a href="https://www.instagram.com/loophole_sessions">Instagram</a>
+            <a href="https://www.tiktok.com/@loophole_sessions">TikTok</a>
+            <a href="https://open.spotify.com/album/7hnbY6ECCt6IQViL0jTzV4">Spotify</a>
+          </div>
+        </div>
+        <div class="t footer-copyright">© 2026 loophole</div>
+      </footer>
+    </div>
+
+    <script src="../scripts/main.js"></script>
+  </body>
+</html>

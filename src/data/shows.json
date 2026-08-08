@@ -1,0 +1,23 @@
+[
+  { "date": "16.10.2026", "venue": "Art der Kultur", "city": "Dresden DE", "ticketUrl": null },
+  { "date": "17.10.2026", "venue": "Backstein West", "city": "Leipzig DE", "ticketUrl": null },
+  { "date": "11.12.2026", "venue": "Literaturcafé", "city": "Biel/Bienne", "ticketUrl": null },
+  { "date": "22.05.2026", "venue": "Moods", "city": "Zürich", "ticketUrl": null },
+  { "date": "09.05.2026", "venue": "Kulturwerk118", "city": "Sursee", "ticketUrl": null },
+  { "date": "02.05.2026", "venue": "Kiff", "city": "Aarau", "ticketUrl": null },
+  { "date": "30.10.2025", "venue": "JazzOnze", "city": "Lausanne", "ticketUrl": null },
+  { "date": "25.10.2025", "venue": "Verein am See", "city": "Bern", "ticketUrl": null },
+  { "date": "03.07.2025", "venue": "Studio Festival", "city": "Zürich", "ticketUrl": null },
+  { "date": "04.04.2024", "venue": "Cully Jazz", "city": "Cully", "ticketUrl": null },
+  { "date": "15.03.2024", "venue": "Atomic", "city": "Biel/Bienne", "ticketUrl": null },
+  { "date": "10.03.2024", "venue": "ISC", "city": "Bern", "ticketUrl": null },
+  { "date": "08.03.2024", "venue": "Kiff", "city": "Aarau", "ticketUrl": null },
+  { "date": "01.03.2024", "venue": "TapTab", "city": "Schaffhausen", "ticketUrl": null },
+  { "date": "28.02.2024", "venue": "Dynamo", "city": "Zürich", "ticketUrl": null },
+  { "date": "22.02.2024", "venue": "Galvanik", "city": "Zug", "ticketUrl": null },
+  { "date": "21.09.2023", "venue": "Sender", "city": "Zürich", "ticketUrl": null },
+  { "date": "29.07.2022", "venue": "Festival Da Jazz", "city": "St. Moritz", "ticketUrl": null },
+  { "date": "28.07.2022", "venue": "Festival Da Jazz", "city": "St. Moritz", "ticketUrl": null },
+  { "date": "10.07.2022", "venue": "Triebguet", "city": "Baden", "ticketUrl": null },
+  { "date": "12.03.2022", "venue": "Mehrspur", "city": "Zürich", "ticketUrl": null }
+]

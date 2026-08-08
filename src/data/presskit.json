@@ -1,0 +1,17 @@
+{
+  "files": [
+    { "name": "Press text", "kind": "PDF", "url": "/downloads/press-text.pdf" },
+    { "name": "Bios", "kind": "PDF", "url": "/downloads/bios.pdf" },
+    { "name": "Tech rider — trio", "kind": "PDF", "url": "/downloads/tech-rider-trio.pdf" },
+    { "name": "Tech rider — 4-tett", "kind": "PDF", "url": "/downloads/tech-rider-4tett.pdf" },
+    { "name": "Photos", "kind": "ZIP", "url": "/downloads/press-photos.zip" }
+  ],
+  "completeKit": "/downloads/loophole-press-kit.zip",
+  "photos": [
+    "/images/press/press-1.jpg",
+    "/images/press/press-2.jpg",
+    "/images/press/press-3.jpg",
+    "/images/press/press-4.jpg",
+    "/images/press/press-5.jpg"
+  ]
+}
