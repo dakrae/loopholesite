@@ -45,15 +45,7 @@ const ASSETS = [
   { dest: 'public/images/press/press-3.jpg', urls: [wix('65e9d4_d2a5ae5842aa45f789e149b13fdf5278~mv2.jpg/v1/fill/w_1114,h_742,al_c,q_85/press-3.jpg')] },
   { dest: 'public/images/press/press-4.jpg', urls: [wix('65e9d4_a2b52405698248d384ecacfb364c632e~mv2.jpg/v1/fill/w_1114,h_742,al_c,q_85/press-4.jpg')] },
   { dest: 'public/images/press/press-5.jpg', urls: [wix('65e9d4_72bc67cb33d14074bd8f5d60b0332f10~mv2.jpg/v1/fill/w_708,h_1062,al_c,q_85/press-5.jpg')] },
-  // Album covers available online (the rest live in public/covers/ in the repo).
-  {
-    dest: 'public/covers/doom-scrolling.jpg',
-    urls: [wix('65e9d4_d7491ffc7ff240a4b61b837dbde6a1f7~mv2.jpg/v1/fill/w_1400,h_1400,al_c,q_85/doom-scrolling.jpg')],
-  },
-  {
-    dest: 'public/covers/songs-vol-1.jpg',
-    urls: [wix('65e9d4_b7a930cd145b4a3c857ccffd6842300c~mv2.jpg/v1/fill/w_1200,h_1200,al_c,q_85/songs-vol-1.jpg')],
-  },
+  // Album covers all live in public/covers/ in the repo — nothing to fetch.
   // Video thumbnail.
   { dest: 'public/images/video-doom.jpg', urls: ['https://i.ytimg.com/vi/oLf0dvIrwU4/maxresdefault.jpg'] },
   // Press kit files (old Wix file hosting).

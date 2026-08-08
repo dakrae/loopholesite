@@ -45,8 +45,7 @@ werden (dann überspringt das Skript den Download).
 
 Noch offen:
 
-- [ ] Die 11 Album-Cover aus dem Design-Handoff nach `public/covers/` committen
-      (Dateinamen siehe `releases.json`)
+- [x] Alle 13 Album-Cover liegen in `public/covers/`
 - [ ] Original-Fotos (Band, Presse, Hintergrund) committen statt Wix-Download
 - [ ] Presskit-PDFs/ZIPs committen
 
