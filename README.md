@@ -38,16 +38,30 @@ zeigt die Seite automatisch eine Text-Kachel.
 
 ## Bilder & Dateien
 
-Beim Build lädt `scripts/fetch-assets.mjs` alle noch fehlenden Fotos/PDFs vom alten
-Wix-CDN herunter. **Wichtig:** Sobald das alte Wix-Hosting gekündigt wird, funktioniert
-das nicht mehr — die Originaldateien sollten deshalb einmalig nach `public/` committet
-werden (dann überspringt das Skript den Download).
+Fast alles liegt im Repo unter `public/`:
+
+| Was | Wo |
+|---|---|
+| Hintergrundfoto Hauptseite | `public/images/bg.jpg` |
+| Banner Booking-Seite | `public/images/booking-hero.jpg` |
+| Pressefotos | `public/images/press/` |
+| Album-Cover | `public/covers/` |
+| Presskit-PDFs | `public/downloads/` |
+
+Die beiden ZIP-Downloads der Booking-Seite werden bei **jedem Build automatisch**
+aus diesen Dateien erzeugt (`scripts/make-zips.mjs`) — ein neues Pressefoto in
+`public/images/press/` landet also von selbst im ZIP. Sie sind deshalb bewusst
+nicht eingecheckt.
 
 Noch offen:
 
-- [x] Alle 13 Album-Cover liegen in `public/covers/`
-- [ ] Original-Fotos (Band, Presse, Hintergrund) committen statt Wix-Download
-- [ ] Presskit-PDFs/ZIPs committen
+- [x] Alle 13 Album-Cover
+- [x] Hintergrund-, Banner- und Pressefotos
+- [x] Presskit-PDFs (ZIPs werden generiert)
+- [ ] **Bandfotos** (`public/images/band/`) — die drei Einzelporträts werden noch
+      beim Build vom alten Wix-Server geholt (`scripts/fetch-assets.mjs`) und
+      müssen ersetzt werden, bevor die alte Seite abgeschaltet wird
+- [ ] **Video-Thumbnail** — kommt von YouTube, unkritisch
 
 ## Entwicklung
 

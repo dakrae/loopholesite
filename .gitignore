@@ -2,3 +2,7 @@ node_modules/
 dist/
 .astro/
 .DS_Store
+
+# Built from public/ by scripts/make-zips.mjs on every build
+public/downloads/press-photos.zip
+public/downloads/loophole-press-kit.zip
