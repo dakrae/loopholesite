@@ -29,17 +29,22 @@ const description =
   <body>
     <header class="bk-header">
       <div class="bk-nav-inner">
-        <nav class="bk-nav-links" aria-label="Main">
-          <a href="/">← Site</a>
-          <a href="#downloads">Downloads</a>
-          <a href="#photos">Photos</a>
-          <a href="#music">Music</a>
-        </nav>
-        <div class="bk-nav-rule"></div>
-        <div class="bk-nav-side">
-          <a class="icon icon-instagram" href="https://www.instagram.com/loophole_sessions" aria-label="Instagram"></a>
-          <a class="icon icon-tiktok" href="https://www.tiktok.com/@loophole_sessions" aria-label="TikTok"></a>
-          <a class="bk-nav-contact" href="mailto:michel@rarealpine.ch">Contact</a>
+        <button class="nav-toggle" type="button" data-nav-toggle aria-controls="bk-menu" aria-expanded="false" aria-label="Open menu">
+          <span class="nav-toggle-bars"></span>
+        </button>
+        <div class="bk-nav-menu" id="bk-menu">
+          <nav class="bk-nav-links" aria-label="Main">
+            <a href="/">← Site</a>
+            <a href="#downloads">Downloads</a>
+            <a href="#photos">Photos</a>
+            <a href="#music">Music</a>
+          </nav>
+          <div class="bk-nav-rule"></div>
+          <div class="bk-nav-side">
+            <a class="icon icon-instagram" href="https://www.instagram.com/loophole_sessions" aria-label="Instagram"></a>
+            <a class="icon icon-tiktok" href="https://www.tiktok.com/@loophole_sessions" aria-label="TikTok"></a>
+            <a class="bk-nav-contact" href="mailto:michel@rarealpine.ch">Contact</a>
+          </div>
         </div>
       </div>
     </header>
@@ -110,5 +115,10 @@ const description =
       <a class="bk-footer-mail" href="mailto:michel@rarealpine.ch">michel@rarealpine.ch</a>
       <div class="bk-footer-copyright">© 2026 loophole · Zürich</div>
     </footer>
+
+    <script>
+      import { initNav } from '../scripts/nav.js';
+      initNav();
+    </script>
   </body>
 </html>
