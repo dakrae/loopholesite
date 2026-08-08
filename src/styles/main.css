@@ -353,6 +353,13 @@ a:hover {
   font-variant-numeric: tabular-nums;
 }
 
+/* Venue and city are wrapped so they can move as one block on narrow
+   screens. On the wide layout the wrapper steps out of the way and both
+   stay columns of the row grid. */
+.gig-place {
+  display: contents;
+}
+
 .gig-venue {
   line-height: 1.65;
 }
@@ -431,19 +438,60 @@ a:hover {
   border-bottom-color: #14140f1a;
 }
 
+/* Narrow screens: date and ticket hold the ends of the line and the place
+   fills what is between them, instead of every field taking a line of its
+   own. Short entries collapse to a single line; only long ones wrap. */
 @media (max-width: 720px) {
+  /* Upcoming rows carry a ticket button. Squeezing the place in beside it
+     leaves too little width and strands the separator at the line end, so
+     the date and the button take the top line and the place gets the full
+     width below — which keeps it on one line. */
   .gig-row {
     grid-template-columns: minmax(0, 1fr) auto;
     grid-template-areas:
-      'date ticket'
-      'venue ticket'
-      'city ticket';
-    row-gap: 4px;
+      'date  ticket'
+      'place place';
+    column-gap: 14px;
+    row-gap: 2px;
+    align-items: baseline;
+    padding: 16px 0;
+    line-height: 1.35;
   }
-  .gig-date { grid-area: date; }
-  .gig-venue { grid-area: venue; }
-  .gig-city { grid-area: city; }
-  .gig-ticket { grid-area: ticket; align-self: center; }
+
+  .gig-date {
+    grid-area: date;
+  }
+
+  .gig-ticket {
+    grid-area: ticket;
+  }
+
+  .gig-place {
+    grid-area: place;
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 8px;
+  }
+
+  .gig-venue {
+    line-height: inherit;
+  }
+
+  /* Trailing separator, so a wrapped city reads as a continuation rather
+     than starting a line with a stray dot. The no-break space ties the dot
+     to the venue — on the narrowest screens it was being left stranded on
+     a line of its own. */
+  .gig-venue::after {
+    content: '\00a0·';
+    opacity: 0.45;
+  }
+
+  /* Past rows have no button, so date and place share a single line. */
+  .past-list .gig-row {
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-areas: 'date place';
+    row-gap: 0;
+  }
 }
 
 /* ---- media ---- */

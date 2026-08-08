@@ -120,8 +120,10 @@ const description =
           {upcoming.map((s) => (
             <div class="gig-row">
               <span class="gig-date">{s.date}</span>
-              <span class="gig-venue">{s.venue}</span>
-              <span class="gig-city">{s.city}</span>
+              <span class="gig-place">
+                <span class="gig-venue">{s.venue}</span>
+                <span class="gig-city">{s.city}</span>
+              </span>
               <span class="gig-ticket noblend">
                 {s.ticketUrl ? (
                   <a class="ticket-btn" href={s.ticketUrl}>Tickets</a>
@@ -141,9 +143,10 @@ const description =
           {past.map((s) => (
             <div class="gig-row">
               <span class="gig-date">{s.date}</span>
-              <span class="gig-venue">{s.venue}</span>
-              <span class="gig-city">{s.city}</span>
-              <span></span>
+              <span class="gig-place">
+                <span class="gig-venue">{s.venue}</span>
+                <span class="gig-city">{s.city}</span>
+              </span>
             </div>
           ))}
         </div>
