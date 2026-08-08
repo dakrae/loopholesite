@@ -500,6 +500,15 @@ a:hover {
   gap: 36px 24px;
 }
 
+/* Below ~460px the 190px minimum drops the catalogue to a single cover per
+   row. Hold it at two so the grid still reads as a grid on a phone. */
+@media (max-width: 520px) {
+  .release-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 28px 16px;
+  }
+}
+
 .release {
   display: block;
 }
