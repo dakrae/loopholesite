@@ -117,9 +117,16 @@ a:hover {
     min-width: 244px;
     padding: 0;
     overflow: hidden;
-    background: var(--near-black);
-    border: 1px solid #f6f5f13d;
+    background: rgb(13 13 11 / 0.62);
+    -webkit-backdrop-filter: blur(12px) saturate(1.05);
+    backdrop-filter: blur(12px) saturate(1.05);
     border-radius: var(--radius-media);
+  }
+
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .bk-nav-menu {
+      background: rgb(13 13 11 / 0.96);
+    }
   }
 
   .bk-nav-menu[data-open] {
