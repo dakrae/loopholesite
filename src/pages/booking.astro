@@ -10,7 +10,25 @@ import releases from '../data/releases.json';
 
 const featured = releases[0];
 const description =
-  'Booking & press — everything promoters need: press text, photos, bios and tech riders for loophole, Zürich.';
+  'Press kit for loophole, the trio from Zürich: press text, photos, bios and tech riders for promoters and press. Booking via michel@rarealpine.ch.';
+
+const canonical = new URL('/booking/', Astro.site).href;
+const ogImage = new URL('/images/booking-hero.jpg', Astro.site).href;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: 'Booking & press kit — loophole',
+  description,
+  url: canonical,
+  inLanguage: 'en',
+  about: {
+    '@type': 'MusicGroup',
+    '@id': `${new URL('/', Astro.site).href}#band`,
+    name: 'loophole',
+    url: new URL('/', Astro.site).href,
+  },
+};
 ---
 
 <!doctype html>
@@ -18,13 +36,23 @@ const description =
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Booking — loophole</title>
+    <title>Booking &amp; press kit — loophole</title>
     <meta name="description" content={description} />
-    <meta property="og:title" content="Booking — loophole" />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:site_name" content="loophole" />
+    <meta property="og:title" content="Booking & press kit — loophole" />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content="/images/booking-hero.jpg" />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:alt" content="loophole — press photo by Thomas Zeller" />
+    <meta property="og:url" content={canonical} />
     <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_GB" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Booking & press kit — loophole" />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   </head>
   <body>
     <header class="bk-header">

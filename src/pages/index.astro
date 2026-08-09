@@ -33,7 +33,93 @@ const featured = releases[0];
 const catalogue = releases.slice(1);
 
 const description =
-  'loophole — a trio at the pulse of contemporary music from Zürich. Jazz expression, atmospheric beat-driven soundscapes.';
+  'loophole is a trio from Zürich — jazz expression meets atmospheric, beat-driven soundscapes. Live dates, discography and press kit for the Swiss band.';
+
+const canonical = new URL('/', Astro.site).href;
+const ogImage = new URL('/images/bg.jpg', Astro.site).href;
+
+// "16.10.2026" -> "2026-10-16" for schema.org, which wants ISO dates.
+const isoDate = (d) => {
+  const [day, month, year] = d.split('.');
+  return `${year}-${month}-${day}`;
+};
+
+// City reads "Dresden DE" abroad and plain "Aarau" at home.
+const place = (city) => {
+  const m = city.match(/^(.*?)\s+([A-Z]{2})$/);
+  return { locality: m ? m[1] : city, country: m ? m[2] : 'CH' };
+};
+
+const socials = [
+  'https://www.instagram.com/loophole_sessions',
+  'https://www.tiktok.com/@loophole_sessions',
+  'https://www.youtube.com/@loophole_sessions',
+  'https://open.spotify.com/album/7hnbY6ECCt6IQViL0jTzV4',
+  'https://music.rarealpine.ch/lhartistpages',
+];
+
+const band = {
+  '@type': 'MusicGroup',
+  '@id': `${canonical}#band`,
+  name: 'loophole',
+  description,
+  genre: ['Jazz', 'Electronic', 'Instrumental'],
+  url: canonical,
+  image: ogImage,
+  email: 'michel@rarealpine.ch',
+  foundingLocation: { '@type': 'Place', name: 'Zürich, Switzerland' },
+  location: {
+    '@type': 'Place',
+    address: { '@type': 'PostalAddress', addressLocality: 'Zürich', addressCountry: 'CH' },
+  },
+  member: members.map((m) => ({ '@type': 'Person', name: m.name, sameAs: m.url })),
+  sameAs: socials,
+  album: releases.map((r) => ({
+    '@type': 'MusicAlbum',
+    name: r.title,
+    datePublished: r.year,
+    url: r.url,
+    image: new URL(r.cover, Astro.site).href,
+    byArtist: { '@id': `${canonical}#band` },
+  })),
+};
+
+const events = upcoming.map((s) => {
+  const p = place(s.city);
+  return {
+    '@type': 'MusicEvent',
+    name: `loophole live — ${s.venue}, ${p.locality}`,
+    startDate: isoDate(s.date),
+    eventStatus: 'https://schema.org/EventScheduled',
+    eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+    performer: { '@id': `${canonical}#band` },
+    location: {
+      '@type': 'Place',
+      name: s.venue,
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: p.locality,
+        addressCountry: p.country,
+      },
+    },
+    ...(s.ticketUrl ? { offers: { '@type': 'Offer', url: s.ticketUrl, availability: 'https://schema.org/InStock' } } : {}),
+  };
+});
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    band,
+    {
+      '@type': 'WebSite',
+      url: canonical,
+      name: 'loophole',
+      inLanguage: 'en',
+      publisher: { '@id': `${canonical}#band` },
+    },
+    ...events,
+  ],
+};
 ---
 
 <!doctype html>
@@ -41,13 +127,25 @@ const description =
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>loophole — Zürich</title>
+    <title>loophole — jazz trio from Zürich</title>
     <meta name="description" content={description} />
-    <meta property="og:title" content="loophole" />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:site_name" content="loophole" />
+    <meta property="og:title" content="loophole — jazz trio from Zürich" />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content="/images/bg.jpg" />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="2000" />
+    <meta property="og:image:height" content="1333" />
+    <meta property="og:image:alt" content="loophole — Claude Stucki, Michel Spahr and Dave Krähenbühl" />
+    <meta property="og:url" content={canonical} />
     <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_GB" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="loophole — jazz trio from Zürich" />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   </head>
   <body>
     <header class="site-header">
@@ -76,7 +174,7 @@ const description =
     <section id="top" class="hero">
       <picture>
         <source media="(max-width: 820px)" srcset="/images/bg-mobile.jpg" />
-        <img class="lh-bg" src="/images/bg.jpg" alt="loophole" />
+        <img class="lh-bg" src="/images/bg.jpg" alt="loophole — Claude Stucki, Michel Spahr and Dave Krähenbühl" fetchpriority="high" />
       </picture>
       <div class="lh-veil"></div>
       <div class="hero-inner">
@@ -97,6 +195,7 @@ const description =
 
     <div id="lh-content" class="lh-content">
       <section id="about" class="section section-about">
+        <h2 class="visually-hidden noblend">About loophole</h2>
         <p class="about-text">
           loophole are a trio at the pulse of contemporary music. Over years of exploration and creative
           experimentation, they have developed a distinctive sound that blends the expressiveness of jazz with
@@ -107,11 +206,12 @@ const description =
       </section>
 
       <section id="band" class="section">
+        <h2 class="visually-hidden noblend">Band</h2>
         <div class="band-grid">
           {members.map((m) => (
             <a class="member" href={m.url}>
               <div class="member-photo">
-                <img src={m.photo} alt={m.name} loading="lazy" />
+                <img src={m.photo} alt={`${m.name}, ${m.role.toLowerCase()} in loophole`} loading="lazy" />
               </div>
               <div class="member-meta">
                 <h3>{m.name}</h3>
@@ -123,6 +223,7 @@ const description =
       </section>
 
       <section id="live" class="section">
+        <h2 class="visually-hidden noblend">Live dates</h2>
         <div>
           {upcoming.map((s) => (
             <div class="gig-row">
@@ -160,11 +261,12 @@ const description =
       </section>
 
       <section id="media" class="section">
+        <h2 class="visually-hidden noblend">Media</h2>
         <div class="section-head">
           <a class="noblend more-link" href="https://www.youtube.com/@loophole_sessions">All videos →</a>
         </div>
         <a class="video-card" href="https://www.youtube.com/watch?v=oLf0dvIrwU4">
-          <img src="/images/video-doom.jpg" alt="loophole video" loading="lazy" />
+          <img src="/images/video-doom.jpg" alt="loophole — video on YouTube" loading="lazy" />
           <div class="video-overlay">
             <span class="noblend play-pill">Play</span>
           </div>
@@ -172,12 +274,13 @@ const description =
       </section>
 
       <section id="music" class="section">
+        <h2 class="visually-hidden noblend">Music</h2>
         <div class="section-head">
           <a class="noblend more-link" href="https://music.rarealpine.ch/lhartistpages">Full catalogue →</a>
         </div>
         <a class="featured-release" href={featured.url}>
           {hasCover(featured.cover) ? (
-            <img src={featured.cover} alt={featured.title} />
+            <img src={featured.cover} alt={`${featured.title} — album cover, loophole`} />
           ) : (
             <div class="release-cover"><span class="release-cover-title">{featured.title}</span></div>
           )}
@@ -192,7 +295,7 @@ const description =
             <a class="release" href={r.url}>
               <div class="release-cover">
                 {hasCover(r.cover) ? (
-                  <img src={r.cover} alt={r.title} loading="lazy" />
+                  <img src={r.cover} alt={`${r.title} — cover, loophole`} loading="lazy" />
                 ) : (
                   <span class="release-cover-title">{r.title}</span>
                 )}
