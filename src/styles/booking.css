@@ -105,6 +105,7 @@ a:hover {
     display: block;
   }
 
+  /* Same flat row list as the main page, on the dark ground — no shadow. */
   .bk-nav-menu {
     display: none;
     position: absolute;
@@ -113,16 +114,17 @@ a:hover {
     flex-direction: column;
     align-items: stretch;
     gap: 0;
-    min-width: 232px;
-    padding: 8px;
+    min-width: 244px;
+    padding: 0;
+    overflow: hidden;
     background: var(--near-black);
     border: 1px solid #f6f5f13d;
     border-radius: var(--radius-media);
-    box-shadow: 0 20px 44px -20px rgba(0, 0, 0, 0.75);
   }
 
   .bk-nav-menu[data-open] {
     display: flex;
+    animation: lh-menu-in 160ms ease;
   }
 
   .bk-nav-links {
@@ -130,20 +132,39 @@ a:hover {
     gap: 0;
   }
 
-  .bk-nav-links a {
-    padding: 12px 14px;
+  .bk-nav-links a,
+  .bk-nav-contact {
+    padding: 15px 20px;
+    line-height: 1.2;
+    border-bottom: 1px solid #f6f5f11f;
+    transition: color 180ms ease, padding-left 220ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .bk-nav-links a:hover,
+  .bk-nav-contact:hover {
+    padding-left: 26px;
   }
 
   .bk-nav-rule {
-    width: auto;
-    height: 1px;
-    margin: 6px 14px;
-    background: #f6f5f13d;
+    display: none;
   }
 
   .bk-nav-side {
-    gap: 20px;
-    padding: 10px 14px 8px;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0;
+    padding: 0;
+  }
+
+  .bk-nav-contact {
+    order: -1;
+    flex-basis: 100%;
+  }
+
+  .bk-nav-side .icon {
+    width: 24px;
+    height: 24px;
+    margin: 17px 0 17px 20px;
   }
 }
 

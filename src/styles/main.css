@@ -148,6 +148,9 @@ a:hover {
     border-radius: var(--radius-pill);
   }
 
+  /* The panel is built like the row lists elsewhere on the site: even rows
+     on the paper ground, divided by the faintest hairline, so it reads as
+     one object rather than words floating in a box. */
   .nav-menu {
     display: none;
     position: absolute;
@@ -156,16 +159,20 @@ a:hover {
     flex-direction: column;
     align-items: stretch;
     gap: 0;
-    min-width: 232px;
-    padding: 8px;
+    min-width: 244px;
+    padding: 0;
+    overflow: hidden;
     background: var(--paper);
+    /* No shadow: the panel is a flat surface with a drawn edge, not a card
+       lifted off the page. The rule carries the same weight as the section
+       rules, so the edge holds against the photo without any depth cue. */
     border: 1px solid #14140f26;
     border-radius: var(--radius-media);
-    box-shadow: 0 20px 44px -20px rgba(20, 20, 15, 0.5);
   }
 
   .nav-menu[data-open] {
     display: flex;
+    animation: lh-menu-in 160ms ease;
   }
 
   .nav-links {
@@ -173,20 +180,43 @@ a:hover {
     gap: 0;
   }
 
-  .nav-links a {
-    padding: 12px 14px;
+  .nav-links a,
+  .nav-contact {
+    padding: 15px 20px;
+    line-height: 1.2;
+    border-bottom: 1px solid #14140f14;
+    transition: color 180ms ease, padding-left 220ms cubic-bezier(0.16, 1, 0.3, 1);
   }
 
+  /* The same nudge the download rows on the booking page use. */
+  .nav-links a:hover,
+  .nav-contact:hover {
+    padding-left: 26px;
+  }
+
+  /* The row rules divide the panel now. */
   .nav-rule {
-    width: auto;
-    height: 1px;
-    margin: 6px 14px;
-    background: #14140f26;
+    display: none;
   }
 
   .nav-side {
-    gap: 20px;
-    padding: 10px 14px 8px;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0;
+    padding: 0;
+  }
+
+  /* Contact belongs with the other links, not squeezed in beside the
+     icons; the icons get a row of their own underneath. */
+  .nav-contact {
+    order: -1;
+    flex-basis: 100%;
+  }
+
+  .nav-side .icon {
+    width: 24px;
+    height: 24px;
+    margin: 17px 0 17px 20px;
   }
 }
 

@@ -42,6 +42,13 @@ img {
   max-width: 100%;
 }
 
+/* Shared by both pages' menu panels. */
+@keyframes lh-menu-in {
+  from {
+    opacity: 0;
+  }
+}
+
 /* Burger toggle. Hidden until the header row runs out of room; the bars take
    their colour from the header so each page keeps its own ink. */
 .nav-toggle {
