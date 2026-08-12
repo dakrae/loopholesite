@@ -69,8 +69,8 @@ const jsonLd = {
           </nav>
           <div class="bk-nav-rule"></div>
           <div class="bk-nav-side">
-            <a class="icon icon-instagram" href="https://www.instagram.com/loophole_sessions" aria-label="Instagram"></a>
-            <a class="icon icon-tiktok" href="https://www.tiktok.com/@loophole_sessions" aria-label="TikTok"></a>
+            <a class="icon icon-instagram" href="https://www.instagram.com/loophole_sessions" aria-label="Instagram" target="_blank" rel="noopener"></a>
+            <a class="icon icon-tiktok" href="https://www.tiktok.com/@loophole_sessions" aria-label="TikTok" target="_blank" rel="noopener"></a>
             <a class="bk-nav-contact" href="mailto:michel@rarealpine.ch">Contact</a>
           </div>
         </div>
@@ -114,7 +114,7 @@ const jsonLd = {
       </div>
       <div class="photo-grid">
         {presskit.photos.map((p) => (
-          <a class="photo-tile" href={p}>
+          <a class="photo-tile" href={p} target="_blank" rel="noopener">
             <img src={p} alt="loophole press photo" loading="lazy" />
           </a>
         ))}
@@ -126,14 +126,14 @@ const jsonLd = {
         <h2>Music</h2>
       </div>
       <div class="bk-music-grid">
-        <a href={featured.url}>
+        <a href={featured.url} target="_blank" rel="noopener">
           <img src={featured.cover} alt={featured.title} loading="lazy" />
         </a>
         <div>
           <p class="bk-music-text">«{featured.title}» ({featured.year}) is our latest release.</p>
           <div class="bk-music-buttons">
-            <a class="pill-solid" href={featured.url}>Listen</a>
-            <a class="pill-outline" href="https://music.rarealpine.ch/lhartistpages">Full catalogue</a>
+            <a class="pill-solid" href={featured.url} target="_blank" rel="noopener">Listen</a>
+            <a class="pill-outline" href="https://music.rarealpine.ch/lhartistpages" target="_blank" rel="noopener">Full catalogue</a>
           </div>
         </div>
       </div>

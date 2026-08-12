@@ -55,7 +55,7 @@ const socials = [
   'https://www.instagram.com/loophole_sessions',
   'https://www.tiktok.com/@loophole_sessions',
   'https://www.youtube.com/@loophole_sessions',
-  'https://open.spotify.com/album/7hnbY6ECCt6IQViL0jTzV4',
+  'https://open.spotify.com/artist/6d6FPb70570apTFpsJkCPE',
   'https://music.rarealpine.ch/lhartistpages',
 ];
 
@@ -164,8 +164,8 @@ const jsonLd = {
           </nav>
           <div class="nav-rule"></div>
           <div class="nav-side">
-            <a class="icon icon-instagram" href="https://www.instagram.com/loophole_sessions" aria-label="Instagram"></a>
-            <a class="icon icon-tiktok" href="https://www.tiktok.com/@loophole_sessions" aria-label="TikTok"></a>
+            <a class="icon icon-instagram" href="https://www.instagram.com/loophole_sessions" aria-label="Instagram" target="_blank" rel="noopener"></a>
+            <a class="icon icon-tiktok" href="https://www.tiktok.com/@loophole_sessions" aria-label="TikTok" target="_blank" rel="noopener"></a>
             <a class="nav-contact" href="mailto:michel@rarealpine.ch">Contact</a>
           </div>
         </div>
@@ -210,7 +210,7 @@ const jsonLd = {
         <h2 class="visually-hidden noblend">Band</h2>
         <div class="band-grid">
           {members.map((m) => (
-            <a class="member" href={m.url}>
+            <a class="member" href={m.url} target="_blank" rel="noopener">
               <div class="member-photo">
                 <img src={m.photo} alt={`${m.name}, ${m.role.toLowerCase()} in loophole`} loading="lazy" />
               </div>
@@ -235,7 +235,7 @@ const jsonLd = {
               </span>
               <span class="gig-ticket noblend">
                 {s.ticketUrl ? (
-                  <a class="ticket-btn" href={s.ticketUrl}>Tickets</a>
+                  <a class="ticket-btn" href={s.ticketUrl} target="_blank" rel="noopener">Tickets</a>
                 ) : (
                   <span class="ticket-soon">Soon</span>
                 )}
@@ -277,9 +277,9 @@ const jsonLd = {
       <section id="music" class="section">
         <h2 class="visually-hidden noblend">Music</h2>
         <div class="section-head">
-          <a class="noblend more-link" href="https://music.rarealpine.ch/lhartistpages">Full catalogue →</a>
+          <a class="noblend more-link" href="https://music.rarealpine.ch/lhartistpages" target="_blank" rel="noopener">Full catalogue →</a>
         </div>
-        <a class="featured-release" href={featured.url}>
+        <a class="featured-release" href={featured.url} target="_blank" rel="noopener">
           {hasCover(featured.cover) ? (
             <img src={featured.cover} alt={`${featured.title} — album cover, loophole`} />
           ) : (
@@ -293,7 +293,7 @@ const jsonLd = {
         </a>
         <div class="release-grid">
           {catalogue.map((r) => (
-            <a class="release" href={r.url}>
+            <a class="release" href={r.url} target="_blank" rel="noopener">
               <div class="release-cover">
                 {hasCover(r.cover) ? (
                   <img src={r.cover} alt={`${r.title} — cover, loophole`} loading="lazy" />
@@ -321,9 +321,9 @@ const jsonLd = {
           </div>
           <div class="footer-col">
             <span class="footer-col-title">Follow</span>
-            <a href="https://www.instagram.com/loophole_sessions">Instagram</a>
-            <a href="https://www.tiktok.com/@loophole_sessions">TikTok</a>
-            <a href="https://open.spotify.com/album/7hnbY6ECCt6IQViL0jTzV4">Spotify</a>
+            <a href="https://www.instagram.com/loophole_sessions" target="_blank" rel="noopener">Instagram</a>
+            <a href="https://www.tiktok.com/@loophole_sessions" target="_blank" rel="noopener">TikTok</a>
+            <a href="https://open.spotify.com/artist/6d6FPb70570apTFpsJkCPE" target="_blank" rel="noopener">Spotify</a>
           </div>
         </div>
         <div class="t footer-copyright">© 2026 loophole</div>
