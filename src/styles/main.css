@@ -304,6 +304,20 @@ a:hover {
   opacity: 0.85;
 }
 
+/* On a phone the header is 92px and the burger sits at its right edge, so
+   the jump needs its own offset — and the gaps between blocks can be
+   tighter than on a wide screen, where the same air reads as much less. */
+@media (max-width: 820px) {
+  .section {
+    padding-bottom: 130px;
+    scroll-margin-top: 120px;
+  }
+
+  .section-about {
+    padding-bottom: 120px;
+  }
+}
+
 /* The next-show line is a single nowrap row on the wide layout, where it
    fits. On a phone it ran past the edge and was clipped, so it breaks into
    two: date on the first line, venue and city on the second. Left to wrap
@@ -348,11 +362,15 @@ a:hover {
 .section {
   max-width: 1400px;
   margin: 0 auto;
-  padding: 0 28px 110px;
+  padding: 0 28px 170px;
+  /* The header is fixed and 97px tall, so a jump would otherwise land the
+     section underneath it and cut the top off. This clears the header and
+     leaves a hand's breadth of air above whatever the section starts with. */
+  scroll-margin-top: 130px;
 }
 
 .section-about {
-  padding: 64px 28px 90px;
+  padding: 64px 28px 150px;
 }
 
 .about-text {
