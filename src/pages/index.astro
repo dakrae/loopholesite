@@ -34,7 +34,7 @@ const featured = releases[0];
 const catalogue = releases.slice(1);
 
 const description =
-  'loophole is a trio from Zürich — jazz expression meets atmospheric, beat-driven soundscapes. Live dates, discography and press kit for the Swiss band.';
+  'loophole is a UK-jazz trio from Zürich — groove-driven, atmospheric, with the expressiveness of jazz. Live dates, discography and press kit for the Swiss band.';
 
 const canonical = new URL('/', Astro.site).href;
 const ogImage = new URL('/images/bg.jpg', Astro.site).href;
@@ -64,7 +64,7 @@ const band = {
   '@id': `${canonical}#band`,
   name: 'loophole',
   description,
-  genre: ['Jazz', 'Electronic', 'Instrumental'],
+  genre: ['UK Jazz', 'Jazz', 'Groove', 'Electronic'],
   url: canonical,
   image: ogImage,
   email: 'michel@rarealpine.ch',
@@ -128,11 +128,11 @@ const jsonLd = {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>loophole</title>
+    <title>loophole — UK-jazz trio from Zürich</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
     <meta property="og:site_name" content="loophole" />
-    <meta property="og:title" content="loophole — jazz trio from Zürich" />
+    <meta property="og:title" content="loophole — UK-jazz trio from Zürich" />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={ogImage} />
     <meta property="og:image:width" content="2000" />
@@ -142,7 +142,7 @@ const jsonLd = {
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="en_GB" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="loophole — jazz trio from Zürich" />
+    <meta name="twitter:title" content="loophole — UK-jazz trio from Zürich" />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
