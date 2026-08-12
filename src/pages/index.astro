@@ -10,6 +10,7 @@ import path from 'node:path';
 import shows from '../data/shows.json';
 import members from '../data/members.json';
 import releases from '../data/releases.json';
+import media from '../data/media.json';
 
 const parseDate = (d) => {
   const [day, month, year] = d.split('.').map(Number);
@@ -263,14 +264,14 @@ const jsonLd = {
       <section id="media" class="section">
         <h2 class="visually-hidden noblend">Media</h2>
         <div class="section-head">
-          <a class="noblend more-link" href="https://www.youtube.com/@loophole_sessions">All videos →</a>
+          <a class="noblend more-link" href={media.video.channelUrl} target="_blank" rel="noopener">All videos →</a>
         </div>
-        <a class="video-card" href="https://www.youtube.com/watch?v=oLf0dvIrwU4">
-          <img src="/images/video-doom.jpg" alt="loophole — video on YouTube" loading="lazy" />
-          <div class="video-overlay">
+        <div class="video-card" data-video={media.video.id} data-video-title={media.video.title}>
+          <img src={`/images/video-${media.video.id}.jpg`} alt={`${media.video.title} — still`} loading="lazy" />
+          <button class="video-facade" type="button" aria-label={`Play ${media.video.title}`}>
             <span class="noblend play-pill">Play</span>
-          </div>
-        </a>
+          </button>
+        </div>
       </section>
 
       <section id="music" class="section">

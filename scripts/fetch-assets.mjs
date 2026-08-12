@@ -6,18 +6,22 @@
 //
 // Everything else (photos, album covers, press-kit PDFs) is committed
 // under public/.
-import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 
+// The video id lives in src/data/media.json, so changing the video there
+// also changes which still is fetched.
+const { video } = JSON.parse(readFileSync(join(root, 'src/data/media.json'), 'utf8'));
+
 const ASSETS = [
   {
-    dest: 'public/images/video-doom.jpg',
+    dest: `public/images/video-${video.id}.jpg`,
     urls: [
-      'https://i.ytimg.com/vi/oLf0dvIrwU4/maxresdefault.jpg',
-      'https://i.ytimg.com/vi/oLf0dvIrwU4/hqdefault.jpg',
+      `https://i.ytimg.com/vi/${video.id}/maxresdefault.jpg`,
+      `https://i.ytimg.com/vi/${video.id}/hqdefault.jpg`,
     ],
   },
 ];

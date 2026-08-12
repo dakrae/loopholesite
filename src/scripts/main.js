@@ -1,7 +1,9 @@
 import { initAdapt } from './adapt.js';
 import { initNav } from './nav.js';
+import { initVideo } from './video.js';
 
 initNav();
+initVideo();
 
 const adapt = initAdapt();
 
