@@ -23,6 +23,21 @@ Ein Eintrag pro Konzert, **eine** Liste für alles. Die Seite teilt selbst in
 - `date`: Format `TT.MM.JJJJ`
 - `ticketUrl`: Link zum Vorverkauf — oder `null`, dann steht «Soon»
 
+**Wie der Wechsel zu «Past shows» passiert:** Die Aufteilung entsteht beim
+Bauen der Seite, nicht beim Anschauen — die Seite ist statisch ausgeliefertes
+HTML. Ein Konzert wandert also erst dann nach unten, wenn Netlify neu baut.
+Damit das von selbst geschieht, stösst `.github/workflows/rebuild.yml` jede
+Nacht um 04:20 UTC einen Build an. Dafür braucht es einmalig:
+
+1. In Netlify unter *Site configuration → Build & deploy → Build hooks* einen
+   Hook anlegen und die URL kopieren.
+2. Auf GitHub unter *Settings → Secrets and variables → Actions* ein Secret
+   namens `NETLIFY_BUILD_HOOK` mit dieser URL anlegen.
+
+Achtung: GitHub schaltet geplante Abläufe ab, wenn 60 Tage lang nichts ins
+Repo gepusht wurde (es kommt vorher eine E-Mail). Nach einer längeren Pause
+also im Reiter *Actions* nachsehen und gegebenenfalls wieder aktivieren.
+
 ### Releases — `src/data/releases.json`
 
 Neuester Release **zuoberst** — der erste Eintrag wird gross als «Latest release»
