@@ -1,9 +1,12 @@
 import { initAdapt } from './adapt.js';
 import { initNav } from './nav.js';
 import { initVideo } from './video.js';
+import { initShows } from './shows.js';
 
 initNav();
 initVideo();
+// Before the colour engine, so it measures the rows where they end up.
+initShows();
 
 const adapt = initAdapt();
 

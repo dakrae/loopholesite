@@ -24,10 +24,16 @@ Ein Eintrag pro Konzert, **eine** Liste für alles. Die Seite teilt selbst in
 - `ticketUrl`: Link zum Vorverkauf — oder `null`, dann steht «Soon»
 
 **Wie der Wechsel zu «Past shows» passiert:** Die Aufteilung entsteht beim
-Bauen der Seite, nicht beim Anschauen — die Seite ist statisch ausgeliefertes
-HTML. Ein Konzert wandert also erst dann nach unten, wenn Netlify neu baut.
-Damit das von selbst geschieht, stösst `.github/workflows/rebuild.yml` jede
-Nacht um 04:20 UTC einen Build an. Dafür braucht es einmalig:
+Bauen der Seite — die Seite ist statisch ausgeliefertes HTML. Damit ein
+Konzert trotzdem am Tag danach von selbst nach unten wandert, prüft
+`src/scripts/shows.js` die Daten beim Aufruf im Browser nochmals nach und
+verschiebt abgelaufene Einträge; auch die «Next show»-Zeile im Hero zieht
+dabei mit. Es braucht dafür also **kein** neues Deployment.
+
+Was ein Deployment trotzdem braucht: die Konzertdaten für Google & Co.
+(`MusicEvent`-Daten im HTML). Damit auch die nachziehen, stösst
+`.github/workflows/rebuild.yml` jede Nacht um 04:20 UTC einen Build an.
+Das ist optional und braucht einmalig:
 
 1. In Netlify unter *Site configuration → Build & deploy → Build hooks* einen
    Hook anlegen und die URL kopieren.

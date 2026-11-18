@@ -39,7 +39,8 @@ const description =
 const canonical = new URL('/', Astro.site).href;
 const ogImage = new URL('/images/bg.jpg', Astro.site).href;
 
-// "16.10.2026" -> "2026-10-16" for schema.org, which wants ISO dates.
+// "16.10.2026" -> "2026-10-16", for schema.org, which wants ISO dates, and
+// for the data-date attributes the browser re-checks the split against.
 const isoDate = (d) => {
   const [day, month, year] = d.split('.');
   return `${year}-${month}-${day}`;
@@ -225,9 +226,9 @@ const jsonLd = {
 
       <section id="live" class="section">
         <h2 class="visually-hidden noblend">Live dates</h2>
-        <div>
+        <div data-upcoming>
           {upcoming.map((s) => (
-            <div class="gig-row">
+            <div class="gig-row" data-date={isoDate(s.date)}>
               <span class="gig-date">{s.date}</span>
               <span class="gig-place">
                 <span class="gig-venue">{s.venue}</span>
@@ -242,6 +243,9 @@ const jsonLd = {
               </span>
             </div>
           ))}
+          <p class="gig-empty" data-no-shows hidden={upcoming.length > 0}>
+            No dates announced right now — new shows are on the way.
+          </p>
         </div>
         <div class="past-toggle-wrap">
           <button id="lh-past-toggle" class="noblend past-toggle" type="button" aria-controls="lh-past">
@@ -250,7 +254,7 @@ const jsonLd = {
         </div>
         <div id="lh-past" class="past-list">
           {past.map((s) => (
-            <div class="gig-row">
+            <div class="gig-row" data-date={isoDate(s.date)}>
               <span class="gig-date">{s.date}</span>
               <span class="gig-place">
                 <span class="gig-venue">{s.venue}</span>

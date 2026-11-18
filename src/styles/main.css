@@ -534,6 +534,18 @@ a:hover {
   color: var(--paper);
 }
 
+/* Stands in for the list when every announced date has passed. Set in the
+   same size and weight as a gig row so the section doesn't change character
+   when it empties out. */
+.gig-empty {
+  margin: 0;
+  padding: 22px 0;
+  color: var(--black);
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
 .past-list {
   margin-top: 28px;
 }
