@@ -28,21 +28,13 @@ Bauen der Seite — die Seite ist statisch ausgeliefertes HTML. Damit ein
 Konzert trotzdem am Tag danach von selbst nach unten wandert, prüft
 `src/scripts/shows.js` die Daten beim Aufruf im Browser nochmals nach und
 verschiebt abgelaufene Einträge; auch die «Next show»-Zeile im Hero zieht
-dabei mit. Es braucht dafür also **kein** neues Deployment.
+dabei mit. Es braucht dafür also **kein** neues Deployment und keinen
+nächtlichen Rebuild — die Seite hält sich selber aktuell.
 
-Was ein Deployment trotzdem braucht: die Konzertdaten für Google & Co.
-(`MusicEvent`-Daten im HTML). Damit auch die nachziehen, stösst
-`.github/workflows/rebuild.yml` jede Nacht um 04:20 UTC einen Build an.
-Das ist optional und braucht einmalig:
-
-1. In Netlify unter *Site configuration → Build & deploy → Build hooks* einen
-   Hook anlegen und die URL kopieren.
-2. Auf GitHub unter *Settings → Secrets and variables → Actions* ein Secret
-   namens `NETLIFY_BUILD_HOOK` mit dieser URL anlegen.
-
-Achtung: GitHub schaltet geplante Abläufe ab, wenn 60 Tage lang nichts ins
-Repo gepusht wurde (es kommt vorher eine E-Mail). Nach einer längeren Pause
-also im Reiter *Actions* nachsehen und gegebenenfalls wieder aktivieren.
+(Einzig die Konzertdaten für Google & Co. — die `MusicEvent`-Angaben im HTML —
+bleiben bis zum nächsten Build stehen. Das ist unkritisch: Suchmaschinen
+ignorieren Termine, die vorbei sind. Beim nächsten Commit in
+`src/data/shows.json` ziehen sie ohnehin nach.)
 
 ### Releases — `src/data/releases.json`
 
